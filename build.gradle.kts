@@ -35,6 +35,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     runtimeOnly("com.mysql:mysql-connector-j")
+    implementation("com.google.firebase:firebase-admin:9.2.0")
 }
 
 kotlin {
