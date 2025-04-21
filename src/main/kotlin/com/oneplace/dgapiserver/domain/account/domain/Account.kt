@@ -1,4 +1,4 @@
-package com.oneplace.dgapiserver.domain.auth
+package com.oneplace.dgapiserver.domain.account.domain
 
 import jakarta.persistence.*
 

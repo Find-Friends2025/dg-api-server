@@ -1,5 +1,7 @@
-package com.oneplace.dgapiserver.domain.auth
+package com.oneplace.dgapiserver.domain.account.application
 
+import com.oneplace.dgapiserver.domain.account.domain.repository.AccountRepository
+import com.oneplace.dgapiserver.global.firebase.FirebaseTokenVerifier
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service

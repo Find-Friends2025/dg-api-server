@@ -1,4 +1,4 @@
-package com.oneplace.dgapiserver.domain.auth
+package com.oneplace.dgapiserver.global.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseToken

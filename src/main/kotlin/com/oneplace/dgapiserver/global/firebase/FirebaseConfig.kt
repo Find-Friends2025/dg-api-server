@@ -1,4 +1,4 @@
-package com.oneplace.dgapiserver.global.config
+package com.oneplace.dgapiserver.global.firebase
 
 import com.google.auth.oauth2.GoogleCredentials
 import com.google.firebase.FirebaseApp

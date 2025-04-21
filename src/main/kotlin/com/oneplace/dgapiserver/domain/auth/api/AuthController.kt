@@ -1,5 +1,6 @@
-package com.oneplace.dgapiserver.domain.auth
+package com.oneplace.dgapiserver.domain.auth.api
 
+import com.oneplace.dgapiserver.domain.account.application.AccountService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
