@@ -10,12 +10,6 @@ class Account(
     val id: Long = 0,
 
     @Column(nullable = false, unique = true)
-    val uid: String,
-
-    @Column(nullable = false)
-    val nickname: String,
-
-    @Column(nullable = true)
-    val phoneNumber: String? = null,
+    val uid: String
 
 )
