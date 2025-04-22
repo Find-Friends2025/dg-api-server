@@ -39,3 +39,6 @@ application.yml
 
 ### Kotlin ###
 .kotlin
+
+### Firebase ###
+**/firebase-service-key.json
