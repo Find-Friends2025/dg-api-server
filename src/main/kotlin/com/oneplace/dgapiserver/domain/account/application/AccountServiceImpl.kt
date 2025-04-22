@@ -1,8 +1,9 @@
 package com.oneplace.dgapiserver.domain.account.application
 
 import com.oneplace.dgapiserver.domain.account.domain.repository.AccountRepository
+import com.oneplace.dgapiserver.domain.account.exception.InvalidFirebaseTokenException
+import com.oneplace.dgapiserver.domain.account.exception.UserNotFoundException
 import com.oneplace.dgapiserver.global.firebase.FirebaseTokenVerifier
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 
@@ -19,17 +20,16 @@ class AccountServiceImpl(
         val decodedToken = try {
             firebaseTokenVerifier.verifyIdToken(idToken)
         } catch (e: Exception) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Firebase token")
+            throw InvalidFirebaseTokenException()
         }
 
         val uid = decodedToken.uid
 
-        return if (accountRepository.existsByUid(uid)) {
-            ResponseEntity.ok(mapOf("message" to "Login Success"))
-        } else {
-            ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(mapOf("message" to "User Not Found", "uid" to uid))
+        if (!accountRepository.existsByUid(uid)) {
+            throw UserNotFoundException(uid)
         }
+
+        return ResponseEntity.ok(mapOf("message" to "Login Success"))
     }
 }
 
