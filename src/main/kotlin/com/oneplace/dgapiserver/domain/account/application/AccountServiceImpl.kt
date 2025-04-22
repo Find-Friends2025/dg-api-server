@@ -23,10 +23,8 @@ class AccountServiceImpl(
             throw InvalidFirebaseTokenException()
         }
 
-        val uid = decodedToken.uid
-
-        if (!accountRepository.existsByUid(uid)) {
-            throw UserNotFoundException(uid)
+        if (!accountRepository.existsByUid(decodedToken.uid)) {
+            throw UserNotFoundException(decodedToken.uid)
         }
 
         return ResponseEntity.ok(mapOf("message" to "Login Success"))
