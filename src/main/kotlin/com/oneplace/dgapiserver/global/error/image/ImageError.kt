@@ -2,7 +2,7 @@ package com.oneplace.dgapiserver.global.error.image
 
 import org.springframework.http.HttpStatus
 
-enum class ErrorCode(
+enum class ImageError(
     val message: String,
     val status: HttpStatus
 ) {
