@@ -1,6 +1,6 @@
 package com.oneplace.dgapiserver.domain.account.exception
 
-import com.oneplace.dgapiserver.global.error.BusinessException
-import com.oneplace.dgapiserver.global.error.account.ErrorCode
+import com.oneplace.dgapiserver.global.error.account.AccountException
+import com.oneplace.dgapiserver.global.error.account.AccountError
 
-class InvalidFirebaseTokenException : BusinessException(ErrorCode.INVALID_FIREBASE_TOKEN)
+class InvalidFirebaseTokenException : AccountException(AccountError.INVALID_FIREBASE_TOKEN)

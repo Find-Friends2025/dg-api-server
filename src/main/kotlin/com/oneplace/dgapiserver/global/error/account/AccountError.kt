@@ -2,7 +2,7 @@ package com.oneplace.dgapiserver.global.error.account
 
 import org.springframework.http.HttpStatus
 
-enum class ErrorCode(
+enum class AccountError(
     val message: String,
     val status: HttpStatus
 ) {
