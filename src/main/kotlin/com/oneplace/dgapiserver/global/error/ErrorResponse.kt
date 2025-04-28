@@ -1,5 +1,6 @@
 package com.oneplace.dgapiserver.global.error
 
+import com.oneplace.dgapiserver.global.error.account.ErrorCode
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.web.servlet.NoHandlerFoundException

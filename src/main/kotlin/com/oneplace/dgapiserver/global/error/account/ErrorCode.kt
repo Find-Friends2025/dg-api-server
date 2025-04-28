@@ -1,4 +1,4 @@
-package com.oneplace.dgapiserver.global.error
+package com.oneplace.dgapiserver.global.error.account
 
 import org.springframework.http.HttpStatus
 

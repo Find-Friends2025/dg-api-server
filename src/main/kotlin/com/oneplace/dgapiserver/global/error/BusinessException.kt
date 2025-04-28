@@ -1,5 +1,7 @@
 package com.oneplace.dgapiserver.global.error
 
+import com.oneplace.dgapiserver.global.error.account.ErrorCode
+
 open class BusinessException(
     val errorCode: ErrorCode
 ) : RuntimeException(errorCode.message) {
