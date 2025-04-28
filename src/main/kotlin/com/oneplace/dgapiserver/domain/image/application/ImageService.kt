@@ -3,7 +3,6 @@ package com.oneplace.dgapiserver.domain.image.application
 import com.oneplace.dgapiserver.domain.image.application.dto.response.UrlResponse
 import com.oneplace.dgapiserver.domain.image.exception.FileUploadErrorException
 import com.oneplace.dgapiserver.global.s3.S3Uploader
-import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
@@ -14,12 +13,15 @@ class ImageService(
 ) {
 
     fun uploadImage(multipartFile: MultipartFile?): UrlResponse {
-        try {
-            return UrlResponse(s3Uploader.upload(multipartFile, "image"))
+        if (multipartFile == null) {
+            throw IllegalArgumentException()
+        }
+
+        return try {
+            UrlResponse(s3Uploader.upload(multipartFile, "image"))
         } catch (e: IOException) {
             throw FileUploadErrorException()
         }
     }
-
 }
 
