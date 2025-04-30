@@ -18,7 +18,7 @@ class AuthController(
     }
 
     @PostMapping("/register")
-    fun signup(@RequestBody registerRequest: RegisterRequest): ResponseEntity<Unit> {
+    fun signup(@RequestBody registerRequest: RegisterRequest): ResponseEntity<Any> {
         return accountService.registerUser(registerRequest)
     }
 }
