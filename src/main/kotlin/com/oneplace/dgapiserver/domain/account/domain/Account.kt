@@ -1,9 +1,11 @@
 package com.oneplace.dgapiserver.domain.account.domain
 
 import jakarta.persistence.*
+import org.hibernate.annotations.DynamicUpdate
 import java.time.LocalDate
 
 @Entity
+@DynamicUpdate
 @Table(name = "account")
 class Account(
     @Id
@@ -14,17 +16,20 @@ class Account(
     val uid: String,
 
     @Column(nullable = true)
-    val gender: String,
+    var gender: String? = null,
 
     @Column(nullable = true)
-    val birth: LocalDate,
+    var birth: LocalDate? = null,
 
     @Column(nullable = true)
-    val location: String,
+    var location: String? = null,
 
     @Column(nullable = true)
-    val nickname: String,
+    var nickname: String? = null,
 
     @Column(nullable = true, columnDefinition = "TEXT")
-    val profilePicUrl: String
+    var profilePicUrl: String? = null,
+
+    @Column(nullable = true)
+    var isRegistered: Boolean = false
 )
