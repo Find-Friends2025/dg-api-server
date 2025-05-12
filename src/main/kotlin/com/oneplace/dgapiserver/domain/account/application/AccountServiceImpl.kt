@@ -1,5 +1,6 @@
 package com.oneplace.dgapiserver.domain.account.application
 
+import com.google.firebase.auth.FirebaseToken
 import com.oneplace.dgapiserver.domain.account.domain.repository.AccountRepository
 import com.oneplace.dgapiserver.domain.account.exception.InvalidFirebaseTokenException
 import com.oneplace.dgapiserver.domain.account.exception.UserAlreadyExistsException
@@ -23,17 +24,18 @@ class AccountServiceImpl(
     override fun handleFirebaseLogin(idToken: String): ResponseEntity<Any> {
         val idToken = idToken.removePrefix("Bearer ").trim()
 
-        val decodedToken = try {
-            firebaseTokenVerifier.verifyIdToken(idToken)
+        val uid = try {
+            val firebaseToken: FirebaseToken = firebaseTokenVerifier.verifyIdToken(idToken)
+            firebaseToken.uid
         } catch (e: Exception) {
-            throw InvalidFirebaseTokenException()
+            throw InvalidFirebaseTokenException() // 401
         }
 
-        if (!accountRepository.existsByUid(decodedToken.uid)) {
-            throw UserNotFoundException()
+        return if (accountRepository.existsByUid(uid)) {
+            ResponseEntity.ok(mapOf("message" to "Login Success")) // 200
+        } else {
+            throw UserNotFoundException() // 404
         }
-
-        return ResponseEntity.ok(mapOf("message" to "Login Success"))
     }
 
     override fun registerUser(registerRequest: RegisterRequest): ResponseEntity<Any> {
