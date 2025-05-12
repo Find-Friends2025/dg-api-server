@@ -1,6 +1,7 @@
 package com.oneplace.dgapiserver.domain.account.application
 
 import com.google.firebase.auth.FirebaseToken
+import com.oneplace.dgapiserver.domain.account.domain.Account
 import com.oneplace.dgapiserver.domain.account.domain.repository.AccountRepository
 import com.oneplace.dgapiserver.domain.account.exception.InvalidFirebaseTokenException
 import com.oneplace.dgapiserver.domain.account.exception.UserAlreadyExistsException
@@ -39,25 +40,27 @@ class AccountServiceImpl(
     }
 
     override fun registerUser(registerRequest: RegisterRequest): ResponseEntity<Any> {
-        val account = accountRepository.findByUid(registerRequest.uid)
-            ?: throw UserNotFoundException()
 
-        if (account.isRegistered) {
+        if (accountRepository.existsByUid(registerRequest.uid)) {
             throw UserAlreadyExistsException()
         }
 
-        account.gender = registerRequest.gender
-        account.birth = registerRequest.birth
-        account.location = registerRequest.location
-        account.nickname = registerRequest.nickname
-        account.profilePicUrl = registerRequest.profilePicUrl
-        account.isRegistered = true
+        val account = Account(
+            uid = registerRequest.uid,
+            gender = registerRequest.gender,
+            birth = registerRequest.birth,
+            location = registerRequest.location,
+            nickname = registerRequest.nickname,
+            profilePicUrl = registerRequest.profilePicUrl,
+            isRegistered = true
+        )
 
         accountRepository.save(account)
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(mapOf("message" to "Registration Success"))
     }
+
 
 }
 
