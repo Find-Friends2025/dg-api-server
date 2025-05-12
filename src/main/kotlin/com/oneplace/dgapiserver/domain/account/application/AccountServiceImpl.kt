@@ -18,10 +18,6 @@ class AccountServiceImpl(
     private val accountRepository: AccountRepository
 ) : AccountService {
 
-    override fun existsByUid(uid: String): Boolean {
-        return accountRepository.existsByUid(uid)
-    }
-
     override fun handleFirebaseLogin(idToken: String): ResponseEntity<Any> {
         val idToken = idToken.removePrefix("Bearer ").trim()
 
@@ -60,7 +56,6 @@ class AccountServiceImpl(
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(mapOf("message" to "Registration Success"))
     }
-
 
 }
 
