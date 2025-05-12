@@ -1,5 +1,6 @@
 package com.oneplace.dgapiserver.global.error
 
+import com.oneplace.dgapiserver.global.error.account.AccountException
 import org.hibernate.exception.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
@@ -15,8 +16,8 @@ import org.springframework.web.servlet.NoHandlerFoundException
 @RestControllerAdvice
 class GlobalExceptionHandler {
 
-    @ExceptionHandler(BusinessException::class)
-    fun stageExceptionHandler(e: BusinessException): ResponseEntity<ErrorResponse> =
+    @ExceptionHandler(AccountException::class)
+    fun stageExceptionHandler(e: AccountException): ResponseEntity<ErrorResponse> =
         ResponseEntity(ErrorResponse.of(e), HttpStatus.valueOf(e.status))
 
     @ExceptionHandler(BindException::class)
