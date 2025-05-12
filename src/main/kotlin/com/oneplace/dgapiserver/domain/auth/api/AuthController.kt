@@ -3,7 +3,6 @@ package com.oneplace.dgapiserver.domain.auth.api
 import com.oneplace.dgapiserver.domain.account.application.AccountService
 import com.oneplace.dgapiserver.domain.auth.api.dto.request.RegisterRequest
 import com.oneplace.dgapiserver.global.response.BaseResponse
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
