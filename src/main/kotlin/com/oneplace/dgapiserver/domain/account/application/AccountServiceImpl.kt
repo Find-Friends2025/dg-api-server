@@ -21,6 +21,8 @@ class AccountServiceImpl(
     }
 
     override fun handleFirebaseLogin(idToken: String): ResponseEntity<Any> {
+        val idToken = idToken.removePrefix("Bearer ").trim()
+
         val decodedToken = try {
             firebaseTokenVerifier.verifyIdToken(idToken)
         } catch (e: Exception) {

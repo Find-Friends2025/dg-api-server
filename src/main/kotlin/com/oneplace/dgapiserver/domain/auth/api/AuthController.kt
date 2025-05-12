@@ -13,8 +13,7 @@ class AuthController(
 
     @PostMapping("/login")
     fun login(@RequestHeader("Authorization") authHeader: String): ResponseEntity<Any> {
-        val token = authHeader.removePrefix("Bearer ").trim()
-        return accountService.handleFirebaseLogin(token)
+        return accountService.handleFirebaseLogin(authHeader)
     }
 
     @PostMapping("/register")
