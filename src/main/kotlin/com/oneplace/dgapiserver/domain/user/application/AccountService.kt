@@ -1,4 +1,4 @@
-package com.oneplace.dgapiserver.domain.account.application
+package com.oneplace.dgapiserver.domain.user.application
 
 import org.springframework.http.ResponseEntity
 
