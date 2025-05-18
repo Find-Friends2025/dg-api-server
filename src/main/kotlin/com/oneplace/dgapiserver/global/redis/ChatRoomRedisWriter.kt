@@ -28,7 +28,6 @@ class ChatRoomRedisWriter(
         redisTemplate.opsForSet().add(chatRoomUserKey, *userIds.toTypedArray())
         redisTemplate.expire(chatRoomUserKey, ttl)
 
-        // 3. 유저 정보 저장 (Hash)
         users.forEach { user ->
             val userKey = "chat:user:${user.id}"
             val userMap = mapOf(

@@ -20,4 +20,10 @@ class ChatRoom (
     fun block(){
         if (!this.isBlocked) this.isBlocked = true
     }
+
+    fun update(lastMessageId: String , lastMessage: String, lastMessageDate: Date){
+        this.lastMessageId = lastMessageId
+        this.lastMessage = lastMessage
+        this.lastMessageDate = lastMessageDate
+    }
 }

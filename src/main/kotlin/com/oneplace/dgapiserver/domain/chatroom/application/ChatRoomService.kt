@@ -76,4 +76,33 @@ class ChatRoomService(
             )
         }
     }
+
+    @Transactional(rollbackFor = [Exception::class])
+    fun updateChatRoomAndUnreadCount(
+        roomId: UUID,
+        messageId: String,
+        messageContent: String,
+        messageDate: Date,
+        senderId: String
+    ) {
+        val chatRoom: ChatRoom = chatRoomRepository.findByIdOrNull(roomId)
+            ?: throw ChatRoomNotFountException()
+
+        chatRoom.update(
+            lastMessageId = messageId,
+            lastMessage= messageContent,
+            lastMessageDate= messageDate
+        )
+
+        val chatRoomUsers = chatRoomUserRepository.findByChatRoom(chatRoom)
+
+        chatRoomUsers.forEach { chatRoomUser ->
+            if (chatRoomUser.user.id.toString() != senderId) {
+                chatRoomUser.unreadMessageCount += 1
+            }
+        }
+
+        chatRoomRepository.save(chatRoom)
+        chatRoomUserRepository.saveAll(chatRoomUsers)
+    }
 }
