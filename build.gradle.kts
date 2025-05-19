@@ -45,8 +45,6 @@ dependencies {
     implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
     implementation("software.amazon.awssdk:s3:2.20.21")
 
-    implementation("io.github.microutils:kotlin-logging-jvm:3.0.5")
-
 }
 
 kotlin {
