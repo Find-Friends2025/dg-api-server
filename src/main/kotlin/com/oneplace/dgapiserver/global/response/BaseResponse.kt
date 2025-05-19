@@ -20,5 +20,4 @@ data class BaseResponse<T>(
         state = code.state,
         message = code.message
     )
-
 }

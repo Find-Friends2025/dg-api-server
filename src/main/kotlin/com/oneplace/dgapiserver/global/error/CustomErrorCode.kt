@@ -7,5 +7,4 @@ interface CustomErrorCode {
     val status: HttpStatus
     val state: String
     val message: String
-
 }
