@@ -1,9 +1,12 @@
 package com.oneplace.dgapiserver.domain.account.domain
 
 import jakarta.persistence.*
+import org.hibernate.annotations.DynamicUpdate
+import java.time.LocalDate
 
 @Entity
-@Table(name = "user")
+@DynamicUpdate
+@Table(name = "account")
 class Account(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -12,9 +15,21 @@ class Account(
     @Column(nullable = false, unique = true)
     val uid: String,
 
-    @Column(nullable = false)
-    val nickname: String,
+    @Column(nullable = true)
+    var gender: String? = null,
 
-    @Column(columnDefinition = "TEXT")
-    val profilePicUrl: String?= null
+    @Column(nullable = true)
+    var birth: LocalDate? = null,
+
+    @Column(nullable = true)
+    var location: String? = null,
+
+    @Column(nullable = true)
+    var nickname: String? = null,
+
+    @Column(nullable = true, columnDefinition = "TEXT")
+    var profilePicUrl: String? = null,
+
+    @Column(nullable = true)
+    var isRegistered: Boolean = false
 )
