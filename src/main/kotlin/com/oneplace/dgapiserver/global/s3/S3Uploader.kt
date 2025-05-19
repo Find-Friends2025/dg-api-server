@@ -4,7 +4,7 @@ import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.GetObjectRequest
 import com.amazonaws.services.s3.model.ListObjectsV2Request
 import com.amazonaws.services.s3.model.PutObjectRequest
-import mu.KotlinLogging
+import com.oneplace.dgapiserver.global.support.logger.logger
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
@@ -19,9 +19,7 @@ class S3Uploader(
     private val s3Properties: S3Properties,
 ) {
 
-    companion object {
-        private val log = KotlinLogging.logger {}
-    }
+    private val log = logger()
 
     fun upload(multipartFile: MultipartFile, dirName: String): String {
         val uploadFile = convert(multipartFile)
@@ -42,9 +40,9 @@ class S3Uploader(
 
     private fun removeLocalFile(targetFile: File) {
         if (targetFile.delete()) {
-            log.info { "파일이 삭제되었습니다: ${targetFile.name}" }
+            log.info("파일이 삭제되었습니다: ${targetFile.name}")
         } else {
-            log.warn { "파일 삭제 실패: ${targetFile.name}" }
+            log.warn("파일 삭제 실패: ${targetFile.name}")
         }
     }
 
@@ -52,9 +50,9 @@ class S3Uploader(
         val key = extractKeyFromUrl(s3ImageUrl)
         if (key.startsWith("face-android/")) {
             amazonS3.deleteObject(s3Properties.bucket, key)
-            log.info { "파일이 삭제되었습니다: $s3ImageUrl" }
+            log.info("파일이 삭제되었습니다: $s3ImageUrl")
         } else {
-            log.warn { "버킷에 없는 파일입니다: $s3ImageUrl" }
+            log.warn("버킷에 없는 파일입니다: $s3ImageUrl")
         }
     }
 
