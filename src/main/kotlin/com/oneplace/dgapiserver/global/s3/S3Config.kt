@@ -4,19 +4,20 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider
 import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.AmazonS3ClientBuilder
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
 class S3Config(
-    @Value("\${cloud.aws.credentials.accessKey}") private val accessKey: String,
-    @Value("\${cloud.aws.credentials.secretKey}") private val secretKey: String,
-    @Value("\${cloud.aws.region.static}") private val region: String,
+    private val s3Properties: S3Properties
 ) {
     @Bean
     fun amazonS3Client(): AmazonS3 = AmazonS3ClientBuilder.standard()
-        .withCredentials(AWSStaticCredentialsProvider(BasicAWSCredentials(accessKey, secretKey)))
-        .withRegion(region)
+        .withCredentials(
+            AWSStaticCredentialsProvider(
+                BasicAWSCredentials(s3Properties.accessKey, s3Properties.secretKey)
+            )
+        )
+        .withRegion(s3Properties.region)
         .build()
 }
