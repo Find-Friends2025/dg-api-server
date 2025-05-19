@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus
 data class BaseResponse<T>(
 
     override val status: Int = HttpStatus.OK.value(),
-    override val success: Boolean = true,
     override val state: String = "OK",
     override val message: String,
     val data: T? = null,
@@ -18,7 +17,6 @@ data class BaseResponse<T>(
     // errorResponse constructor
     constructor(code: CustomErrorCode) : this(
         status = code.status.value(),
-        success = false,
         state = code.state,
         message = code.message
     )
