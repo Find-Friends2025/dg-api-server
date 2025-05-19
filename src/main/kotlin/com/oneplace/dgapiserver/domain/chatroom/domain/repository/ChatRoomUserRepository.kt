@@ -1,7 +1,7 @@
 package com.oneplace.dgapiserver.domain.chatroom.domain.repository
 
+import com.oneplace.dgapiserver.domain.account.domain.Account
 import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoom
-import com.oneplace.dgapiserver.domain.account.domain.User
 import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoomUser
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository
@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
 interface ChatRoomUserRepository: JpaRepository<ChatRoomUser, Long> {
-    fun findByUser(user: User): List<ChatRoomUser>?
+    fun findByUser(user: Account): List<ChatRoomUser>?
     @Query("""
     SELECT c
     FROM chat_room_user c
@@ -21,9 +21,9 @@ interface ChatRoomUserRepository: JpaRepository<ChatRoomUser, Long> {
         WHERE cr.user = :user
     ) AND c.user != :user
 """)
-    fun findChatRoomUsersByUser(@Param("user") user: User): List<ChatRoomUser>
+    fun findChatRoomUsersByUser(@Param("user") user: Account): List<ChatRoomUser>
 
-    fun existByChatRoomAndUser(chatRoom: ChatRoom, user: User): Boolean
+    fun existByChatRoomAndUser(chatRoom: ChatRoom, user: Account): Boolean
 
     @EntityGraph(attributePaths = ["user"])
     fun findByChatRoom(chatRoom: ChatRoom): List<ChatRoomUser>

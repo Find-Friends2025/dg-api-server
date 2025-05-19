@@ -1,6 +1,6 @@
 package com.oneplace.dgapiserver.domain.chatroom.domain
 
-import com.oneplace.dgapiserver.domain.account.domain.User
+import com.oneplace.dgapiserver.domain.account.domain.Account
 import jakarta.persistence.*
 
 @Entity(name = "chat_room_user")
@@ -15,7 +15,7 @@ class ChatRoomUser(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    val user: User,
+    val user: Account,
 
     var unreadMessageCount: Int = 0,
 )
