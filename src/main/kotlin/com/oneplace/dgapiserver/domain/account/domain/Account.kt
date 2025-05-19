@@ -1,10 +1,10 @@
-package com.oneplace.dgapiserver.domain.user.domain
+package com.oneplace.dgapiserver.domain.account.domain
 
 import jakarta.persistence.*
 
 @Entity
 @Table(name = "user")
-class User(
+class Account(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,

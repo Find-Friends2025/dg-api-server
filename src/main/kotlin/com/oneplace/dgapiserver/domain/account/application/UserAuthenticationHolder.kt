@@ -1,6 +1,6 @@
-package com.oneplace.dgapiserver.domain.user.application
+package com.oneplace.dgapiserver.domain.account.application
 
-import com.oneplace.dgapiserver.domain.user.domain.User
+import com.oneplace.dgapiserver.domain.account.domain.User
 import org.springframework.stereotype.Component
 
 @Component

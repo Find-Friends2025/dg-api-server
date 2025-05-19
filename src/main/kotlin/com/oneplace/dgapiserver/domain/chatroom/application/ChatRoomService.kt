@@ -6,8 +6,8 @@ import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoomUser
 import com.oneplace.dgapiserver.domain.chatroom.domain.repository.ChatRoomRepository
 import com.oneplace.dgapiserver.domain.chatroom.domain.repository.ChatRoomUserRepository
 import com.oneplace.dgapiserver.domain.chatroom.exception.ChatRoomNotFountException
-import com.oneplace.dgapiserver.domain.user.application.UserAuthenticationHolder
-import com.oneplace.dgapiserver.domain.user.domain.repository.AccountRepository
+import com.oneplace.dgapiserver.domain.account.application.UserAuthenticationHolder
+import com.oneplace.dgapiserver.domain.account.domain.repository.AccountRepository
 import com.oneplace.dgapiserver.global.error.InvalidPermissionException
 import com.oneplace.dgapiserver.global.redis.ChatRoomRedisWriter
 import org.springframework.data.repository.findByIdOrNull

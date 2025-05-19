@@ -1,7 +1,7 @@
 package com.oneplace.dgapiserver.domain.chatroom.domain.repository
 
 import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoom
-import com.oneplace.dgapiserver.domain.user.domain.User
+import com.oneplace.dgapiserver.domain.account.domain.User
 import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoomUser
 import org.springframework.data.jpa.repository.EntityGraph
 import org.springframework.data.jpa.repository.JpaRepository

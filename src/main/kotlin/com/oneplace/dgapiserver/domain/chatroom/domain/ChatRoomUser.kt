@@ -1,6 +1,6 @@
 package com.oneplace.dgapiserver.domain.chatroom.domain
 
-import com.oneplace.dgapiserver.domain.user.domain.User
+import com.oneplace.dgapiserver.domain.account.domain.User
 import jakarta.persistence.*
 
 @Entity(name = "chat_room_user")

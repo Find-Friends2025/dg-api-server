@@ -1,7 +1,7 @@
 package com.oneplace.dgapiserver.global.redis
 
 import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoom
-import com.oneplace.dgapiserver.domain.user.domain.User
+import com.oneplace.dgapiserver.domain.account.domain.User
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
 import java.time.Duration
