@@ -1,5 +1,7 @@
 package com.oneplace.dgapiserver.global.error
 
+import com.oneplace.dgapiserver.global.error.account.AccountError
+import com.oneplace.dgapiserver.global.error.account.AccountException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.web.servlet.NoHandlerFoundException
@@ -9,7 +11,7 @@ data class ErrorResponse(
     val status: Int
 )  {
     companion object {
-        fun of(e: BusinessException) =
+        fun of(e: AccountException) =
             ErrorResponse(
                 message = e.message,
                 status = e.status
@@ -23,12 +25,12 @@ data class ErrorResponse(
 
         fun of(e: DataIntegrityViolationException) = DataErrorResponse(
             message = e.message.toString(),
-            status = ErrorCode.BAD_REQUEST.status.value()
+            status = AccountError.BAD_REQUEST.status.value()
         )
 
         fun of(e: NoHandlerFoundException) = NoHandlerErrorResponse(
             message = e.message.toString(),
-            status = ErrorCode.BAD_REQUEST.status.value()
+            status = AccountError.BAD_REQUEST.status.value()
         )
     }
 }
