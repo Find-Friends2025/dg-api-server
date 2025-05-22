@@ -35,7 +35,7 @@ class AuthController(
 
     @PostMapping("/refresh")
     fun refresh(
-        @RequestHeader("Refresh-Token") token: String,
+        @RequestHeader("Authorization") token: String
     ): BaseResponse<AuthTokenDto> {
         return BaseResponse(
             message = "Refresh Request Success",

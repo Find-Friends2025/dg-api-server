@@ -47,7 +47,7 @@ class AuthServiceImpl(
     }
 
     override fun refresh(token: String): AuthTokenDto {
-        val removePrefixToken = token.replace("Bearer ", "").trim()
+        val removePrefixToken = token.removePrefix("Bearer ").trim()
         val refreshToken = authReader.read(removePrefixToken)
         val user = userReader.read(refreshToken.userId)
         return generateToken(user)
