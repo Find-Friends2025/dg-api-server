@@ -9,6 +9,7 @@ import com.oneplace.dgapiserver.domain.account.exception.InvalidFirebaseTokenExc
 import com.oneplace.dgapiserver.domain.account.exception.UserAlreadyExistsException
 import com.oneplace.dgapiserver.domain.account.exception.UserNotFoundException
 import com.oneplace.dgapiserver.domain.user.application.UserProcessor
+import com.oneplace.dgapiserver.domain.user.application.UserReader
 import com.oneplace.dgapiserver.global.firebase.FirebaseTokenVerifier
 import com.oneplace.dgapiserver.global.jwt.JwtGenerator
 import org.springframework.stereotype.Service
@@ -21,7 +22,9 @@ class AuthServiceImpl(
     private val userMapper: AuthMapper,
     private val userProcessor: UserProcessor,
     private val jwtGenerator: JwtGenerator,
-    private val authMapper: AuthMapper
+    private val authMapper: AuthMapper,
+    private val authReader: AuthReader,
+    private val userReader: UserReader,
 ) : AuthService {
 
     override fun login(idToken: String): AuthLoginDto {
@@ -41,6 +44,13 @@ class AuthServiceImpl(
         val user = userProcessor.getUserOrCreate(uid)
         val tokenDto = generateToken(user)
         return authMapper.login(tokenDto, user)
+    }
+
+    override fun refresh(token: String): AuthTokenDto {
+        val removePrefixToken = token.replace("Bearer ", "").trim()
+        val refreshToken = authReader.read(removePrefixToken)
+        val user = userReader.read(refreshToken.userId)
+        return generateToken(user)
     }
 
     override fun register(request: RegisterReqDto): AuthTokenDto {
