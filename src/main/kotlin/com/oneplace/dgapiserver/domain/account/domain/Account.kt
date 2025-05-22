@@ -1,5 +1,6 @@
 package com.oneplace.dgapiserver.domain.account.domain
 
+import com.oneplace.dgapiserver.domain.account.application.dto.RegisterReqDto
 import jakarta.persistence.*
 import org.hibernate.annotations.DynamicUpdate
 import java.time.LocalDate
@@ -31,5 +32,29 @@ class Account(
     var profilePicUrl: String? = null,
 
     @Column(nullable = true)
-    var isRegistered: Boolean = false
-)
+    var isRegistered: Boolean = false,
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "authority", nullable = false)
+    var authority: Authority = Authority.UNAUTHENTICATED,
+) {
+
+    fun signUp(request: RegisterReqDto) {
+        gender = request.gender
+        birth = request.birth
+        location = request.location
+        nickname = request.nickname
+        profilePicUrl = request.profilePicUrl
+        isRegistered = true
+        authority = Authority.USER
+    }
+
+    companion object {
+        fun of(uid: String) = Account(uid = uid)
+    }
+
+}
+
+enum class Authority {
+    UNAUTHENTICATED, USER
+}
