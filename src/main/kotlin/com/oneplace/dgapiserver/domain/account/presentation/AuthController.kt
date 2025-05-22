@@ -32,4 +32,14 @@ class AuthController(
             data = authService.register(registerRequest)
         )
     }
+
+    @PostMapping("/refresh")
+    fun refresh(
+        @RequestHeader("Refresh-Token") token: String,
+    ): BaseResponse<AuthTokenDto> {
+        return BaseResponse(
+            message = "Refresh Request Success",
+            data = authService.refresh(token)
+        )
+    }
 }
