@@ -35,11 +35,6 @@ data class ErrorResponse(
     }
 }
 
-data class ValidationErrorResponse(
-    val fieldError: Map<String, String?>,
-    val status: Int
-)
-
 data class DataErrorResponse(
     val message: String,
     val status: Int
