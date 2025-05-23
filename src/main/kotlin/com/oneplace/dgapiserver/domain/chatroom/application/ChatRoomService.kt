@@ -8,7 +8,8 @@ import com.oneplace.dgapiserver.domain.chatroom.domain.repository.ChatRoomUserRe
 import com.oneplace.dgapiserver.domain.chatroom.exception.ChatRoomNotFountException
 import com.oneplace.dgapiserver.domain.account.application.UserAuthenticationHolder
 import com.oneplace.dgapiserver.domain.account.domain.repository.AccountRepository
-import com.oneplace.dgapiserver.global.error.InvalidPermissionException
+import com.oneplace.dgapiserver.domain.account.exception.UserNotFoundException
+import com.oneplace.dgapiserver.domain.chatroom.exception.InvalidPermissionException
 import com.oneplace.dgapiserver.global.redis.ChatRoomRedisWriter
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -25,7 +26,7 @@ class ChatRoomService(
 ) {
     @Transactional(rollbackFor = [Exception::class])
     fun saveCharRoom(userId: Long){
-        val targetUser = accountRepository.findByIdOrThrow(userId)
+        val targetUser = accountRepository.findById(userId).orElseThrow { UserNotFoundException() }
         val chatRoom = chatRoomRepository.save(ChatRoom())
         chatRoomUserRepository.saveAll(listOf(
             ChatRoomUser(chatRoom = chatRoom, user = authenticationHolder.current()),
@@ -67,7 +68,7 @@ class ChatRoomService(
             val otherUser = chatRoomUser.user
             ChatRoomResponse(
                 id= chatRoom.id,
-                name= otherUser.nickname,
+                name= otherUser.nickname!!,
                 lastMessageId= chatRoom.lastMessageId,
                 lastMessage= chatRoom.lastMessage,
                 lastMessageDate = chatRoom.lastMessageDate,
