@@ -7,6 +7,7 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.connection.stream.MapRecord
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.data.redis.core.StringRedisTemplate
+import org.springframework.data.redis.serializer.StringRedisSerializer
 import org.springframework.data.redis.stream.StreamMessageListenerContainer
 import java.time.Duration
 
@@ -24,9 +25,17 @@ class RedisConfig {
     }
 
     @Bean
-    fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, String> {
-        val redisTemplate = RedisTemplate<String, String>()
-        redisTemplate.connectionFactory = redisConnectionFactory
+    fun redisTemplate(redisConnectionFactory: RedisConnectionFactory): RedisTemplate<String, Any> {
+        val redisTemplate = RedisTemplate<String, Any>()
+        redisTemplate.setConnectionFactory(redisConnectionFactory)
+
+        val stringSerializer = StringRedisSerializer()
+        redisTemplate.keySerializer = stringSerializer
+        redisTemplate.valueSerializer = stringSerializer
+        redisTemplate.hashKeySerializer = stringSerializer
+        redisTemplate.hashValueSerializer = stringSerializer
+
+        redisTemplate.afterPropertiesSet()
         return redisTemplate
     }
 
