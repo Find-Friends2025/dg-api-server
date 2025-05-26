@@ -1,4 +1,4 @@
-package com.oneplace.dgapiserver.domain.chatroom.api
+package com.oneplace.dgapiserver.domain.chatroom.presentation
 
 import com.oneplace.dgapiserver.domain.chatroom.application.ChatRoomService
 import com.oneplace.dgapiserver.domain.chatroom.application.dto.response.ChatRoomResponse
