@@ -5,10 +5,10 @@ import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoom
 import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoomUser
 import com.oneplace.dgapiserver.domain.chatroom.domain.repository.ChatRoomRepository
 import com.oneplace.dgapiserver.domain.chatroom.domain.repository.ChatRoomUserRepository
-import com.oneplace.dgapiserver.domain.chatroom.exception.ChatRoomNotFountException
 import com.oneplace.dgapiserver.domain.account.application.UserAuthenticationHolder
 import com.oneplace.dgapiserver.domain.account.domain.repository.AccountRepository
-import com.oneplace.dgapiserver.global.error.InvalidPermissionException
+import com.oneplace.dgapiserver.domain.chatroom.exception.ChatroomNotFountException
+import com.oneplace.dgapiserver.domain.common.exception.InvalidPermissionException
 import com.oneplace.dgapiserver.global.redis.ChatRoomRedisWriter
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -36,7 +36,7 @@ class ChatRoomService(
     @Transactional(rollbackFor = [Exception::class])
     fun blockChatRoom(chatRoomId: UUID){
         val chatRoom: ChatRoom =  chatRoomRepository.findByIdOrNull(chatRoomId)
-            ?: throw ChatRoomNotFountException()
+            ?: throw ChatroomNotFountException()
         val exists= chatRoomUserRepository.existByChatRoomAndUser(
             chatRoom= chatRoom,
             user= authenticationHolder.current()
@@ -49,7 +49,7 @@ class ChatRoomService(
     @Transactional(rollbackFor = [Exception::class])
     fun checkJoinChatRoom(chatRoomId: UUID) {
         val chatRoom: ChatRoom =  chatRoomRepository.findByIdOrNull(chatRoomId)
-            ?: throw ChatRoomNotFountException()
+            ?: throw ChatroomNotFountException()
         val chatRoomUsers: List<ChatRoomUser> = chatRoomUserRepository.findByChatRoom(chatRoom)
         chatRoomRedisWriter.saveChatRoom(
             chatRoom = chatRoom,
@@ -67,7 +67,7 @@ class ChatRoomService(
             val otherUser = chatRoomUser.user
             ChatRoomResponse(
                 id= chatRoom.id,
-                name= otherUser.nickname,
+                name= otherUser.nickname!!,
                 lastMessageId= chatRoom.lastMessageId,
                 lastMessage= chatRoom.lastMessage,
                 lastMessageDate = chatRoom.lastMessageDate,
@@ -86,7 +86,7 @@ class ChatRoomService(
         senderId: String
     ) {
         val chatRoom: ChatRoom = chatRoomRepository.findByIdOrNull(roomId)
-            ?: throw ChatRoomNotFountException()
+            ?: throw ChatroomNotFountException()
 
         chatRoom.update(
             lastMessageId = messageId,

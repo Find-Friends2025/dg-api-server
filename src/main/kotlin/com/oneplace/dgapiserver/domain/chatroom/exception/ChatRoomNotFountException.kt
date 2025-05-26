@@ -1,6 +1,6 @@
 package com.oneplace.dgapiserver.domain.chatroom.exception
 
-import com.oneplace.dgapiserver.global.error.BusinessException
-import com.oneplace.dgapiserver.global.error.ErrorCode
+import com.oneplace.dgapiserver.global.error.chatroom.ChatroomError
+import com.oneplace.dgapiserver.global.error.chatroom.ChatroomException
 
-class ChatRoomNotFountException: BusinessException(ErrorCode.CHATROOM_NOT_FOUND)
+class ChatroomNotFountException: ChatroomException(ChatroomError.CHATROOM_NOT_FOUNT)
