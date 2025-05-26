@@ -4,6 +4,7 @@ import com.oneplace.dgapiserver.domain.auth.application.dto.RegisterReqDto
 import jakarta.persistence.*
 import org.hibernate.annotations.DynamicUpdate
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 @Entity
 @DynamicUpdate
@@ -28,8 +29,22 @@ class User(
     @Column(nullable = true)
     var nickname: String? = null,
 
+    @Column(nullable = true)
+    val bodyType: String? = null,
+
+    @Column(nullable = true)
+    val height: Int? = null,
+
+    @Column(nullable = true)
+    val introduce: String? = null,
+
+    var isOnline: Boolean = true,
+
     @Column(nullable = true, columnDefinition = "TEXT")
     var profilePicUrl: String? = null,
+
+    @Column(nullable = false, updatable = false)
+    val createdAt: LocalDateTime = LocalDateTime.now(),
 
     @Column(nullable = true)
     var isRegistered: Boolean = false,
@@ -51,6 +66,18 @@ class User(
 
     companion object {
         fun of(uid: String) = User(uid = uid)
+    }
+
+    fun modify(
+        birth: LocalDate?,
+        nickname: String?,
+        residence: String?,
+        isOnline: Boolean?,
+    ) {
+        birth?.let { this.birth = it }
+        nickname?.let { this.nickname = it }
+        residence?.let { this.location = it }
+        isOnline?.let { this.isOnline = it }
     }
 
 }
