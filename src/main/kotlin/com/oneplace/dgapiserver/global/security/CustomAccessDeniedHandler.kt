@@ -23,7 +23,6 @@ class CustomAccessDeniedHandler(
         response: HttpServletResponse,
         accessDeniedException: AccessDeniedException
     ) {
-        log.info("==================== ACCESS DENIED ====================")
         response.characterEncoding = "utf-8"
         response.status = HttpStatus.FORBIDDEN.value()
         response.contentType = MediaType.APPLICATION_JSON_VALUE

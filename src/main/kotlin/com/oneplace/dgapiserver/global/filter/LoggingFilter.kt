@@ -20,40 +20,24 @@ class LoggingFilter : OncePerRequestFilter() {
 
     private val log: Logger = LoggerFactory.getLogger(LoggingFilter::class.java)
 
-    private val NOT_LOGGING_URL: Array<String> = arrayOf(
-        "/actuator/**"
-    )
-
-    private val matcher = AntPathMatcher()
-
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
     ) {
-
-        if (isNotLoggingURL(request.requestURI)) {
-            try {
-                filterChain.doFilter(request, response)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            return
+        try {
+            filterChain.doFilter(request, response)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
 
         val requestWrapper = ContentCachingRequestWrapper(request)
         val responseWrapper = ContentCachingResponseWrapper(response)
-        val logId = UUID.randomUUID()
-        val startTime = System.currentTimeMillis()
-
         try {
-            requestLogging(requestWrapper, logId)
             filterChain.doFilter(requestWrapper, responseWrapper)
         } catch (e: Exception) {
             log.error("LoggingFilter의 FilterChain에서 예외가 발생했습니다.", e)
         } finally {
-            responseLogging(responseWrapper, startTime, logId)
             try {
                 responseWrapper.copyBodyToResponse()
             } catch (e: IOException) {
@@ -61,41 +45,4 @@ class LoggingFilter : OncePerRequestFilter() {
             }
         }
     }
-
-    private fun isNotLoggingURL(requestURI: String): Boolean {
-        return Arrays.stream(NOT_LOGGING_URL)
-            .anyMatch { pattern: String -> matcher.match(pattern, requestURI) }
-    }
-
-    private fun requestLogging(request: ContentCachingRequestWrapper, logId: UUID) {
-        log.info(
-            "Log-ID: {}, IP: {}, URI: {}, Http-Method: {}, Params: {}, Content-Type: {}, User-Agent: {}, Request-Body: {}",
-            logId,
-            request.remoteAddr,
-            request.requestURI,
-            request.method,
-            request.queryString,
-            request.contentType,
-            request.getHeader("User-Agent"),
-            getRequestBody(request.contentAsByteArray)
-        )
-    }
-
-    private fun responseLogging(response: ContentCachingResponseWrapper, startTime: Long, logId: UUID) {
-        val responseTime = System.currentTimeMillis() - startTime
-        log.info(
-            "Log-ID: {}, Status-Code: {}, Content-Type: {}, Response Time: {}ms, Response-Body: {}",
-            logId,
-            response.status,
-            response.contentType,
-            responseTime,
-            String(response.contentAsByteArray, StandardCharsets.UTF_8)
-        )
-    }
-
-    private fun getRequestBody(byteArrayContent: ByteArray): String {
-        val oneLineContent = String(byteArrayContent, StandardCharsets.UTF_8).replace(Regex("\\s"), "")
-        return if (StringUtils.hasText(oneLineContent)) oneLineContent else "[empty]"
-    }
-
 }

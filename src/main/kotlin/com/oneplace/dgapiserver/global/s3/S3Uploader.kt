@@ -46,40 +46,6 @@ class S3Uploader(
         }
     }
 
-    fun removeFaceAndroidFile(s3ImageUrl: String) {
-        val key = extractKeyFromUrl(s3ImageUrl)
-        if (key.startsWith("face-android/")) {
-            amazonS3.deleteObject(s3Properties.bucket, key)
-            log.info("파일이 삭제되었습니다: $s3ImageUrl")
-        } else {
-            log.warn("버킷에 없는 파일입니다: $s3ImageUrl")
-        }
-    }
-
-    private fun extractKeyFromUrl(s3ImageUrl: String): String {
-        val decodedUrl = URLDecoder.decode(s3ImageUrl, StandardCharsets.UTF_8)
-        return decodedUrl.substringAfter(".com/")
-    }
-
-    fun getAllImageUrlsFromS3(directory: String): List<String> {
-        val request = ListObjectsV2Request()
-            .withBucketName(s3Properties.bucket)
-            .withPrefix(directory)
-
-        val result = amazonS3.listObjectsV2(request)
-
-        return result.objectSummaries.map { s3Object ->
-            amazonS3.getUrl(s3Properties.bucket, s3Object.key).toString()
-        }
-    }
-
-    fun getObjectBytes(s3ImageUrl: String): ByteArray {
-        val key = extractKeyFromUrl(s3ImageUrl)
-        return amazonS3.getObject(GetObjectRequest(s3Properties.bucket, key)).objectContent.use { inputStream ->
-            inputStream.readBytes()
-        }
-    }
-
     private fun convert(multipartFile: MultipartFile): File {
         val file = File(multipartFile.originalFilename ?: throw IllegalArgumentException("파일명이 없습니다."))
         FileOutputStream(file).use { fos ->
