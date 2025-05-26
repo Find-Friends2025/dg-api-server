@@ -50,7 +50,13 @@ class SecurityConfig(
                 .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
 
-                .anyRequest().denyAll()
+                // swagger
+                .requestMatchers(
+                    "/v3/api-docs/**",
+                    "/swagger-ui/**",
+                    "/swagger-ui.html"
+                ).permitAll()
+                .anyRequest().authenticated()
         }
 
         return http.build()
