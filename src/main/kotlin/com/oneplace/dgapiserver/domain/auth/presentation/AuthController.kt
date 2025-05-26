@@ -1,9 +1,9 @@
-package com.oneplace.dgapiserver.domain.account.presentation
+package com.oneplace.dgapiserver.domain.auth.presentation
 
-import com.oneplace.dgapiserver.domain.account.application.AuthService
-import com.oneplace.dgapiserver.domain.account.application.dto.AuthLoginDto
-import com.oneplace.dgapiserver.domain.account.application.dto.AuthTokenDto
-import com.oneplace.dgapiserver.domain.account.application.dto.RegisterReqDto
+import com.oneplace.dgapiserver.domain.auth.application.AuthService
+import com.oneplace.dgapiserver.domain.auth.application.dto.AuthLoginDto
+import com.oneplace.dgapiserver.domain.auth.application.dto.AuthTokenDto
+import com.oneplace.dgapiserver.domain.auth.application.dto.RegisterReqDto
 import com.oneplace.dgapiserver.global.response.BaseResponse
 import org.springframework.web.bind.annotation.*
 

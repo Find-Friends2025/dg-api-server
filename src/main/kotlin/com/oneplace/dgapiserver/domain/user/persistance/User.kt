@@ -1,14 +1,14 @@
-package com.oneplace.dgapiserver.domain.account.domain
+package com.oneplace.dgapiserver.domain.user.persistance
 
-import com.oneplace.dgapiserver.domain.account.application.dto.RegisterReqDto
+import com.oneplace.dgapiserver.domain.auth.application.dto.RegisterReqDto
 import jakarta.persistence.*
 import org.hibernate.annotations.DynamicUpdate
 import java.time.LocalDate
 
 @Entity
 @DynamicUpdate
-@Table(name = "account")
-class Account(
+@Table(name = "users")
+class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
@@ -50,7 +50,7 @@ class Account(
     }
 
     companion object {
-        fun of(uid: String) = Account(uid = uid)
+        fun of(uid: String) = User(uid = uid)
     }
 
 }

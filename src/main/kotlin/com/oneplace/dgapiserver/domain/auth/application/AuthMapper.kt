@@ -1,8 +1,8 @@
-package com.oneplace.dgapiserver.domain.account.application
+package com.oneplace.dgapiserver.domain.auth.application
 
-import com.oneplace.dgapiserver.domain.account.application.dto.AuthLoginDto
-import com.oneplace.dgapiserver.domain.account.application.dto.AuthTokenDto
-import com.oneplace.dgapiserver.domain.account.domain.Account
+import com.oneplace.dgapiserver.domain.auth.application.dto.AuthLoginDto
+import com.oneplace.dgapiserver.domain.auth.application.dto.AuthTokenDto
+import com.oneplace.dgapiserver.domain.user.persistance.User
 import com.oneplace.dgapiserver.global.jwt.dto.TokenDto
 import org.springframework.stereotype.Component
 
@@ -15,7 +15,7 @@ class AuthMapper {
             refreshToken = tokenDto.refreshToken
         )
 
-    fun login(tokenDto: AuthTokenDto, user: Account) =
+    fun login(tokenDto: AuthTokenDto, user: User) =
         AuthLoginDto(
             accessToken = tokenDto.accessToken,
             refreshToken = tokenDto.refreshToken

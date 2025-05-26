@@ -5,12 +5,12 @@ import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoom
 import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoomUser
 import com.oneplace.dgapiserver.domain.chatroom.domain.repository.ChatRoomRepository
 import com.oneplace.dgapiserver.domain.chatroom.domain.repository.ChatRoomUserRepository
-import com.oneplace.dgapiserver.domain.account.application.UserAuthenticationHolder
-import com.oneplace.dgapiserver.domain.account.domain.Account
-import com.oneplace.dgapiserver.domain.account.domain.repository.AccountRepository
-import com.oneplace.dgapiserver.domain.account.exception.UserNotFoundException
+import com.oneplace.dgapiserver.domain.auth.application.UserAuthenticationHolder
+import com.oneplace.dgapiserver.domain.auth.exception.UserNotFoundException
 import com.oneplace.dgapiserver.domain.chatroom.exception.ChatroomNotFountException
 import com.oneplace.dgapiserver.domain.common.exception.InvalidPermissionException
+import com.oneplace.dgapiserver.domain.user.persistance.User
+import com.oneplace.dgapiserver.domain.user.persistance.repository.UserRepository
 import com.oneplace.dgapiserver.global.redis.ChatRoomRedisWriter
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -20,7 +20,7 @@ import java.util.*
 @Service
 class ChatRoomService(
     private val chatRoomRepository: ChatRoomRepository,
-    private val accountRepository: AccountRepository,
+    private val userRepository: UserRepository,
     private val chatRoomUserRepository: ChatRoomUserRepository,
     private val authenticationHolder: UserAuthenticationHolder,
     private val chatRoomRedisWriter: ChatRoomRedisWriter
@@ -108,8 +108,8 @@ class ChatRoomService(
         chatRoomUserRepository.saveAll(chatRoomUsers)
     }
 
-    private fun findByIdOrThrow(id: Long): Account {
-        return accountRepository.findByIdOrNull(id)
+    private fun findByIdOrThrow(id: Long): User {
+        return userRepository.findByIdOrNull(id)
             ?: throw UserNotFoundException()
     }
 }

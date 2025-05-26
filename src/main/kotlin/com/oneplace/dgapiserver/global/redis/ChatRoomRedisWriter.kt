@@ -1,7 +1,7 @@
 package com.oneplace.dgapiserver.global.redis
 
 import com.oneplace.dgapiserver.domain.chatroom.domain.ChatRoom
-import com.oneplace.dgapiserver.domain.account.domain.Account
+import com.oneplace.dgapiserver.domain.user.persistance.User
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.stereotype.Component
 import java.time.Duration
@@ -12,7 +12,7 @@ class ChatRoomRedisWriter(
 ) {
     private val ttl: Duration = Duration.ofHours(3)
 
-    fun saveChatRoom(chatRoom: ChatRoom, users: List<Account>) {
+    fun saveChatRoom(chatRoom: ChatRoom, users: List<User>) {
         val chatRoomKey = "chat:info:${chatRoom.id}"
         val chatRoomUserKey = "$chatRoomKey:users"
 

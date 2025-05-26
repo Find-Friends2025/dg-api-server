@@ -1,6 +1,6 @@
 package com.oneplace.dgapiserver.global.jwt
 
-import com.oneplace.dgapiserver.domain.account.domain.Authority
+import com.oneplace.dgapiserver.domain.user.persistance.Authority
 import com.oneplace.dgapiserver.global.jwt.dto.TokenDto
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm

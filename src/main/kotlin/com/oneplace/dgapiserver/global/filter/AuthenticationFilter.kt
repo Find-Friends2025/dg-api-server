@@ -1,6 +1,6 @@
 package com.oneplace.dgapiserver.global.filter
 
-import com.oneplace.dgapiserver.domain.account.domain.Authority
+import com.oneplace.dgapiserver.domain.user.persistance.Authority
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

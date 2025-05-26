@@ -1,7 +1,7 @@
-package com.oneplace.dgapiserver.domain.account.application
+package com.oneplace.dgapiserver.domain.auth.application
 
-import com.oneplace.dgapiserver.domain.account.persistance.RefreshToken
-import com.oneplace.dgapiserver.domain.account.persistance.RefreshTokenRepository
+import com.oneplace.dgapiserver.domain.auth.persistance.RefreshToken
+import com.oneplace.dgapiserver.domain.auth.persistance.RefreshTokenRepository
 import com.oneplace.dgapiserver.global.jwt.JwtProperties
 import org.springframework.stereotype.Component
 

@@ -1,4 +1,4 @@
-package com.oneplace.dgapiserver.domain.account.application.dto
+package com.oneplace.dgapiserver.domain.auth.application.dto
 
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull

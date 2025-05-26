@@ -1,8 +1,8 @@
-package com.oneplace.dgapiserver.global.error.account
+package com.oneplace.dgapiserver.global.error.user
 
 import org.springframework.http.HttpStatus
 
-enum class AccountError(
+enum class UserError(
     val message: String,
     val status: HttpStatus
 ) {

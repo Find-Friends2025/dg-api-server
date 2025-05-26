@@ -1,7 +1,7 @@
-package com.oneplace.dgapiserver.domain.account.application
+package com.oneplace.dgapiserver.domain.auth.application
 
-import com.oneplace.dgapiserver.domain.account.exception.RefreshNotFoundException
-import com.oneplace.dgapiserver.domain.account.persistance.RefreshTokenRepository
+import com.oneplace.dgapiserver.domain.auth.exception.RefreshNotFoundException
+import com.oneplace.dgapiserver.domain.auth.persistance.RefreshTokenRepository
 import org.springframework.stereotype.Component
 
 @Component

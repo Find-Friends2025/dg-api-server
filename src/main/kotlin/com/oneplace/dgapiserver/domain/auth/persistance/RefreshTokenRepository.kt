@@ -1,4 +1,4 @@
-package com.oneplace.dgapiserver.domain.account.persistance
+package com.oneplace.dgapiserver.domain.auth.persistance
 
 import org.springframework.data.repository.CrudRepository
 
