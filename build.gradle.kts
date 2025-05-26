@@ -31,7 +31,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
@@ -52,6 +51,7 @@ dependencies {
     implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4")
     implementation("software.amazon.awssdk:s3:2.20.21")
 
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
 }
 
 kotlin {
