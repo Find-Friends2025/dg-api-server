@@ -9,21 +9,20 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 
 interface ChatRoomUserRepository: JpaRepository<ChatRoomUser, Long> {
-    fun findByUser(user: Account): List<ChatRoomUser>?
     @Query("""
     SELECT c
     FROM chat_room_user c
     JOIN FETCH c.chatRoom cr
     JOIN FETCH c.user u
     WHERE c.chatRoom IN (
-        SELECT cr
-        FROM chat_room_user cr
-        WHERE cr.user = :user
+        SELECT cru.chatRoom
+        FROM chat_room_user cru
+        WHERE cru.user = :user
     ) AND c.user != :user
 """)
     fun findChatRoomUsersByUser(@Param("user") user: Account): List<ChatRoomUser>
 
-    fun existByChatRoomAndUser(chatRoom: ChatRoom, user: Account): Boolean
+    fun existsByChatRoomAndUser(chatRoom: ChatRoom, user: Account): Boolean
 
     @EntityGraph(attributePaths = ["user"])
     fun findByChatRoom(chatRoom: ChatRoom): List<ChatRoomUser>
