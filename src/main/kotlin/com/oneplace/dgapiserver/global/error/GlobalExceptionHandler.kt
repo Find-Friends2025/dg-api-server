@@ -51,7 +51,7 @@ class GlobalExceptionHandler {
     fun handleConstraintViolationException(e: ConstraintViolationException): ResponseEntity<ErrorResponse> =
         ResponseEntity(ErrorResponse.of("필드 유효성 검사에 실패했습니다: ${e.message}", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST)
 
-//    @ExceptionHandler(RuntimeException::class)
-//    fun handleException(e: RuntimeException): ResponseEntity<ErrorResponse> =
-//        ResponseEntity(ErrorResponse.of(e.message, HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(RuntimeException::class)
+    fun handleException(e: RuntimeException): ResponseEntity<ErrorResponse> =
+        ResponseEntity(ErrorResponse.of(e.message, HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR)
 }
