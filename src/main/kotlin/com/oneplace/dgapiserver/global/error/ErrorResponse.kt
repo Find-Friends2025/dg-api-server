@@ -1,7 +1,6 @@
 package com.oneplace.dgapiserver.global.error
 
 import com.oneplace.dgapiserver.global.error.user.UserError
-import com.oneplace.dgapiserver.global.error.user.UserException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.web.servlet.NoHandlerFoundException
@@ -11,10 +10,10 @@ data class ErrorResponse(
     val status: Int
 )  {
     companion object {
-        fun of(e: UserException) =
+        fun of(e: CustomErrorCode) =
             ErrorResponse(
                 message = e.message,
-                status = e.status
+                status = e.status.value()
             )
 
         fun of(message: String?, status: HttpStatus) =

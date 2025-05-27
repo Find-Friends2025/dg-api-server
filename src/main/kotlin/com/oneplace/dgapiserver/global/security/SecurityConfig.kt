@@ -1,13 +1,14 @@
 package com.oneplace.dgapiserver.global.security
 
+import com.oneplace.dgapiserver.global.filter.AuthenticationExceptionFilter
 import com.oneplace.dgapiserver.global.filter.AuthenticationFilter
-import com.oneplace.dgapiserver.global.filter.LoggingFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
@@ -19,7 +20,7 @@ class SecurityConfig(
     private val customAccessDeniedHandler: CustomAccessDeniedHandler,
     private val customAuthenticationEntryPointHandler: CustomAuthenticationEntryPointHandler,
     private val authenticationFilter: AuthenticationFilter,
-    private val loggingFilter: LoggingFilter,
+    private val authenticationExceptionFilter: AuthenticationExceptionFilter,
 ) {
 
     @Bean
@@ -39,8 +40,8 @@ class SecurityConfig(
             sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         }
 
-        http.addFilterBefore(loggingFilter, UsernamePasswordAuthenticationFilter::class.java)
-            .addFilterBefore(authenticationFilter, LoggingFilter::class.java)
+        http.addFilterAfter(authenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(authenticationExceptionFilter, AuthenticationFilter::class.java)
 
         http.authorizeHttpRequests { httpRequests ->
             httpRequests
@@ -56,7 +57,7 @@ class SecurityConfig(
                     "/swagger-ui/**",
                     "/swagger-ui.html"
                 ).permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().denyAll()
         }
 
         return http.build()

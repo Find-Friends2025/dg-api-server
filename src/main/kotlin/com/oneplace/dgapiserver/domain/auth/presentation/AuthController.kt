@@ -7,12 +7,14 @@ import com.oneplace.dgapiserver.domain.auth.application.dto.RegisterReqDto
 import com.oneplace.dgapiserver.global.response.BaseResponse
 import org.springframework.web.bind.annotation.*
 
+//@Tag(name = "Auth")
 @RestController
 @RequestMapping("/auth")
 class AuthController(
     private val authService: AuthService
 ) {
 
+//    @Operation(summary = "Register a user")
     @PostMapping("/login")
     fun login(
         @RequestHeader("Authorization") authHeader: String

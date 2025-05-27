@@ -1,6 +1,5 @@
 package com.oneplace.dgapiserver.global.error
 
-import com.oneplace.dgapiserver.global.error.user.UserException
 import org.hibernate.exception.ConstraintViolationException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
@@ -16,9 +15,10 @@ import org.springframework.web.servlet.NoHandlerFoundException
 @RestControllerAdvice
 class GlobalExceptionHandler {
 
-    @ExceptionHandler(UserException::class)
-    fun stageExceptionHandler(e: UserException): ResponseEntity<ErrorResponse> =
-        ResponseEntity(ErrorResponse.of(e), HttpStatus.valueOf(e.status))
+    @ExceptionHandler(CustomException::class)
+    fun stageExceptionHandler(e: CustomException): ResponseEntity<ErrorResponse> {
+        return ResponseEntity(ErrorResponse.of(e.errorCode), HttpStatus.valueOf(e.status))
+    }
 
     @ExceptionHandler(BindException::class)
     fun handleBindException(e: BindException): ResponseEntity<ErrorResponse> =
@@ -51,7 +51,7 @@ class GlobalExceptionHandler {
     fun handleConstraintViolationException(e: ConstraintViolationException): ResponseEntity<ErrorResponse> =
         ResponseEntity(ErrorResponse.of("필드 유효성 검사에 실패했습니다: ${e.message}", HttpStatus.BAD_REQUEST), HttpStatus.BAD_REQUEST)
 
-    @ExceptionHandler(RuntimeException::class)
-    fun handleException(e: RuntimeException): ResponseEntity<ErrorResponse> =
-        ResponseEntity(ErrorResponse.of(e.message, HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR)
+//    @ExceptionHandler(RuntimeException::class)
+//    fun handleException(e: RuntimeException): ResponseEntity<ErrorResponse> =
+//        ResponseEntity(ErrorResponse.of(e.message, HttpStatus.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR)
 }
