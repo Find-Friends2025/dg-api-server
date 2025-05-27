@@ -16,7 +16,6 @@ class CustomAuthenticationEntryPointHandler(
     private val objectMapper: ObjectMapper
 ) : AuthenticationEntryPoint {
 
-    private val log = LoggerFactory.getLogger(this::class.java.simpleName)
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,

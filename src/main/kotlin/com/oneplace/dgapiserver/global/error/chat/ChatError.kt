@@ -1,11 +1,12 @@
 package com.oneplace.dgapiserver.global.error.chat
 
+import com.oneplace.dgapiserver.global.error.CustomErrorCode
 import org.springframework.http.HttpStatus
 
 enum class ChatError(
-    val message: String,
-    val status: HttpStatus
-) {
+    override val message: String,
+    override val status: HttpStatus
+): CustomErrorCode {
     BAD_REQUEST("Bad Request", HttpStatus.BAD_REQUEST),
     INTERNAL_SERVER_ERROR("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR),
     INVALID_PERMISSION("Invalid Permission", HttpStatus.FORBIDDEN),
