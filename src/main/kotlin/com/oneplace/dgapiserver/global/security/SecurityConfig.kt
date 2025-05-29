@@ -51,6 +51,9 @@ class SecurityConfig(
                 .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
 
+                // like
+                .requestMatchers(HttpMethod.POST, "/like/**").permitAll()
+
                 // swagger
                 .requestMatchers(
                     "/v3/api-docs/**",
