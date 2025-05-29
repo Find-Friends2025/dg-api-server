@@ -19,7 +19,7 @@ class AuthController(
     @Operation(summary = "Register a user")
     @PostMapping("/login")
     fun login(
-        @RequestHeader("Authorization") authHeader: String
+        @RequestHeader("X-firebase-token") authHeader: String
     ): BaseResponse<AuthLoginDto> {
         return BaseResponse(
             message = "Login Success",
@@ -29,11 +29,12 @@ class AuthController(
 
     @PostMapping("/register")
     fun signup(
+        @RequestHeader("X-firebase-token") authHeader: String,
         @RequestBody registerRequest: RegisterReqDto
     ): BaseResponse<AuthTokenDto> {
         return BaseResponse(
             message = "Registration Success",
-            data = authService.register(registerRequest)
+            data = authService.register(authHeader, registerRequest)
         )
     }
 

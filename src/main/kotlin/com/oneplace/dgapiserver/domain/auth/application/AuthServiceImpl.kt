@@ -53,9 +53,18 @@ class AuthServiceImpl(
         return generateToken(user)
     }
 
-    override fun register(request: RegisterReqDto): AuthTokenDto {
+    override fun register(idToken: String, request: RegisterReqDto): AuthTokenDto {
         if (userRepository.existsByUid(request.uid)) {
             throw UserAlreadyExistsException()
+        }
+
+        try {
+            val firebaseToken = firebaseTokenVerifier.verifyIdToken(idToken)
+            if (firebaseToken.uid != request.uid) {
+                throw InvalidFirebaseTokenException() // uid 조작 시
+            }
+        } catch (e: Exception) {
+            throw InvalidFirebaseTokenException()
         }
 
         val user = User.of(request.uid)
