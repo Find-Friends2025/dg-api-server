@@ -2,6 +2,9 @@ package com.oneplace.dgapiserver.domain.like.application
 
 import com.oneplace.dgapiserver.domain.auth.application.UserAuthenticationHolder
 import com.oneplace.dgapiserver.domain.like.application.dto.response.WhoLikedMeResponse
+import com.oneplace.dgapiserver.domain.like.application.exception.AlreadyLikedUserException
+import com.oneplace.dgapiserver.domain.like.application.exception.CannotLikeSelfException
+import com.oneplace.dgapiserver.domain.like.application.exception.LikeNotFoundException
 import com.oneplace.dgapiserver.domain.like.persistance.UserLike
 import com.oneplace.dgapiserver.domain.like.persistance.repository.UserLikeRepository
 import com.oneplace.dgapiserver.domain.user.persistance.repository.UserRepository
@@ -22,11 +25,13 @@ class UserLikeServiceImpl (
         val fromUser = userAuthenticationHolder.current()
         val toUser = userRepository.getReferenceById(toUserId)
 
-        require(fromUser.id != toUserId) { "자기 자신을 좋아요할 수 없습니다." }
+        if (fromUser.id == toUserId) {
+            throw CannotLikeSelfException()
+        }
 
         val alreadyLiked = userLikeRepository.existsByFromUserAndToUser(fromUser, toUser)
         if (alreadyLiked) {
-            throw IllegalStateException("이미 해당 유저를 좋아요했습니다.")
+            throw AlreadyLikedUserException()
         }
 
         val like = UserLike(fromUser = fromUser, toUser = toUser)
@@ -39,7 +44,7 @@ class UserLikeServiceImpl (
         val toUser = userRepository.getReferenceById(toUserId)
 
         val deleted = userLikeRepository.deleteByFromUserAndToUser(fromUser, toUser)
-        if (deleted == 0L) throw IllegalStateException("좋아요 기록이 없습니다.")
+        if (deleted == 0L) throw LikeNotFoundException()
     }
 
     override fun countLikes(toUserId: Long): Long {
@@ -55,7 +60,7 @@ class UserLikeServiceImpl (
 
     override fun getUsersWhoLikedMe(): List<WhoLikedMeResponse> {
         val me = userAuthenticationHolder.current()
-        val likes = userLikeRepository.findAllByToUser(me) // 나를 좋아요한 유저들
+        val likes = userLikeRepository.findAllByToUser(me)
         val fromUsers = likes.map { it.fromUser }
 
         val likedUserIdsByMe = userLikeRepository.findAllByFromUser(me)
