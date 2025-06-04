@@ -10,34 +10,22 @@ class LikeController (
 ) {
 
     @PostMapping("/{toUserId}/like")
-    fun like(
-        @RequestParam fromUserId: Long,
-        @PathVariable toUserId: Long
-    ) {
-        userLikeService.like(fromUserId, toUserId)
+    fun like(@PathVariable toUserId: Long) {
+        userLikeService.like(toUserId)
     }
 
     @DeleteMapping("/{toUserId}/like")
-    fun unlike(
-        @RequestParam fromUserId: Long,
-        @PathVariable toUserId: Long
-    ) {
-        userLikeService.unlike(fromUserId, toUserId)
+    fun unlike(@PathVariable toUserId: Long) {
+        userLikeService.unlike(toUserId)
     }
 
     @GetMapping("/{toUserId}/like/count")
-    fun countLikes(
-        @PathVariable toUserId: Long
-    ): Long {
+    fun countLikes(@PathVariable toUserId: Long): Long {
         return userLikeService.countLikes(toUserId)
     }
 
     @GetMapping("/{toUserId}/like/status")
-    fun isLiked(
-        @RequestParam fromUserId: Long,
-        @PathVariable toUserId: Long
-    ): Boolean {
-        return userLikeService.isLiked(fromUserId, toUserId)
+    fun isLiked(@PathVariable toUserId: Long): Boolean {
+        return userLikeService.isLiked(toUserId)
     }
-
 }
