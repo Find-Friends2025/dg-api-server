@@ -47,12 +47,12 @@ class SecurityConfig(
             httpRequests
 
                 // auth
-                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/refresh").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
                 // like
                 .requestMatchers(HttpMethod.POST, "/like/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/like/**").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/like/**").permitAll()
 
                 // swagger
                 .requestMatchers(
