@@ -1,5 +1,6 @@
 package com.oneplace.dgapiserver.domain.like.application
 
+import com.oneplace.dgapiserver.domain.auth.application.UserAuthenticationHolder
 import com.oneplace.dgapiserver.domain.like.persistance.UserLike
 import com.oneplace.dgapiserver.domain.like.persistance.repository.UserLikeRepository
 import com.oneplace.dgapiserver.domain.user.persistance.repository.UserRepository
@@ -9,16 +10,17 @@ import org.springframework.stereotype.Service
 @Service
 class UserLikeServiceImpl (
     private val userRepository: UserRepository,
-    private val userLikeRepository: UserLikeRepository
+    private val userLikeRepository: UserLikeRepository,
+    private val userAuthenticationHolder: UserAuthenticationHolder
 ) : UserLikeService {
 
     // 좋아요 누르기
     @Transactional
-    override fun like(fromUserId: Long, toUserId: Long) {
-        require(fromUserId != toUserId) { "자기 자신을 좋아요할 수 없습니다." }
-
-        val fromUser = userRepository.getReferenceById(fromUserId)
+    override fun like(toUserId: Long) {
+        val fromUser = userAuthenticationHolder.current()
         val toUser = userRepository.getReferenceById(toUserId)
+
+        require(fromUser.id != toUserId) { "자기 자신을 좋아요할 수 없습니다." }
 
         val alreadyLiked = userLikeRepository.existsByFromUserAndToUser(fromUser, toUser)
         if (alreadyLiked) {
@@ -31,8 +33,8 @@ class UserLikeServiceImpl (
 
     // 좋아요 취소
     @Transactional
-    override fun unlike(fromUserId: Long, toUserId: Long) {
-        val fromUser = userRepository.getReferenceById(fromUserId)
+    override fun unlike(toUserId: Long) {
+        val fromUser = userAuthenticationHolder.current()
         val toUser = userRepository.getReferenceById(toUserId)
 
         val deleted = userLikeRepository.deleteByFromUserAndToUser(fromUser, toUser)
@@ -40,8 +42,8 @@ class UserLikeServiceImpl (
     }
 
     // 좋아요 여부 확인
-    override fun isLiked(fromUserId: Long, toUserId: Long): Boolean {
-        val fromUser = userRepository.getReferenceById(fromUserId)
+    override fun isLiked(toUserId: Long): Boolean {
+        val fromUser = userAuthenticationHolder.current()
         val toUser = userRepository.getReferenceById(toUserId)
         return userLikeRepository.existsByFromUserAndToUser(fromUser, toUser)
     }
