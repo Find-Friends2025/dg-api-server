@@ -1,5 +1,6 @@
 package com.oneplace.dgapiserver.global.redis
 
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.redis.connection.RedisConnectionFactory
@@ -12,11 +13,13 @@ import org.springframework.data.redis.stream.StreamMessageListenerContainer
 import java.time.Duration
 
 @Configuration
-class RedisConfig {
+class RedisConfig(
+    private val redisProperties: RedisProperties
+) {
 
     @Bean
     fun redisConnectionFactory(): RedisConnectionFactory {
-        return LettuceConnectionFactory("localhost", 6379)
+        return LettuceConnectionFactory(redisProperties.host, redisProperties.port)
     }
 
     @Bean
