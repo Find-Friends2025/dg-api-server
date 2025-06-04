@@ -54,6 +54,9 @@ class SecurityConfig(
                 .requestMatchers(HttpMethod.GET, "/like/**").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/like/**").permitAll()
 
+                // like
+                .requestMatchers(HttpMethod.POST, "/like/**").permitAll()
+
                 // swagger
                 .requestMatchers(
                     "/v3/api-docs/**",
