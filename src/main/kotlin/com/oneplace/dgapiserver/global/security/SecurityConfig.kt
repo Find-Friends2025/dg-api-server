@@ -50,9 +50,9 @@ class SecurityConfig(
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 
                 // like
-                .requestMatchers(HttpMethod.POST, "/like/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/like/**").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/like/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/like/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "/like/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/like/**").authenticated()
 
                 // swagger
                 .requestMatchers(
