@@ -4,7 +4,10 @@ import com.oneplace.dgapiserver.domain.auth.application.AuthService
 import com.oneplace.dgapiserver.domain.auth.application.dto.AuthLoginDto
 import com.oneplace.dgapiserver.domain.auth.application.dto.AuthTokenDto
 import com.oneplace.dgapiserver.domain.auth.application.dto.RegisterReqDto
+import com.oneplace.dgapiserver.domain.auth.application.dto.TokenVerifyDto
+import com.oneplace.dgapiserver.domain.auth.exception.ExpiredTokenException
 import com.oneplace.dgapiserver.global.response.BaseResponse
+import com.oneplace.dgapiserver.global.support.InternalApiKeyProperties
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.*
@@ -13,7 +16,8 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/auth")
 class AuthController(
-    private val authService: AuthService
+    private val authService: AuthService,
+    private val internalApiKeyProperties: InternalApiKeyProperties
 ) {
 
     @Operation(summary = "Register a user")
@@ -46,5 +50,17 @@ class AuthController(
             message = "Refresh Request Success",
             data = authService.refresh(token)
         )
+    }
+
+    @PostMapping("/token/verify")
+    fun verify(
+        @RequestHeader("X-Internal-Api-Key") authHeader: String,
+        @RequestBody tokenVerifyDto: TokenVerifyDto
+    ): String {
+        if (authHeader != internalApiKeyProperties.apiKey) {
+            throw ExpiredTokenException()
+        }
+        return authService.verify(tokenVerifyDto)
+
     }
 }
