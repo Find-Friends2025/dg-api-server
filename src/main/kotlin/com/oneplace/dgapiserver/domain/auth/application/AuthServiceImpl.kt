@@ -3,6 +3,8 @@ package com.oneplace.dgapiserver.domain.auth.application
 import com.oneplace.dgapiserver.domain.auth.application.dto.AuthLoginDto
 import com.oneplace.dgapiserver.domain.auth.application.dto.AuthTokenDto
 import com.oneplace.dgapiserver.domain.auth.application.dto.RegisterReqDto
+import com.oneplace.dgapiserver.domain.auth.application.dto.TokenVerifyDto
+import com.oneplace.dgapiserver.domain.auth.exception.ExpiredTokenException
 import com.oneplace.dgapiserver.domain.auth.exception.InvalidFirebaseTokenException
 import com.oneplace.dgapiserver.domain.auth.exception.UserAlreadyExistsException
 import com.oneplace.dgapiserver.domain.auth.exception.UserNotFoundException
@@ -12,6 +14,7 @@ import com.oneplace.dgapiserver.domain.user.persistance.User
 import com.oneplace.dgapiserver.domain.user.persistance.repository.UserRepository
 import com.oneplace.dgapiserver.global.firebase.FirebaseTokenVerifier
 import com.oneplace.dgapiserver.global.jwt.JwtGenerator
+import com.oneplace.dgapiserver.global.security.TokenExtractor
 import org.springframework.stereotype.Service
 
 @Service
@@ -25,6 +28,7 @@ class AuthServiceImpl(
     private val authMapper: AuthMapper,
     private val authReader: AuthReader,
     private val userReader: UserReader,
+    private val tokenExtractor: TokenExtractor
 ) : AuthService {
 
     override fun login(idToken: String): AuthLoginDto {
@@ -71,6 +75,15 @@ class AuthServiceImpl(
         val signedUser = userProcessor.signUp(user, request)
         return generateToken(signedUser)
     }
+
+    override fun verify(token: TokenVerifyDto): String =
+        try {
+            val authentication = tokenExtractor.getAuthentication(token.token)
+            authentication.name
+        } catch (e: Exception) {
+            throw ExpiredTokenException()
+        }
+
 
     private fun generateToken(user: User): AuthTokenDto {
         val token = jwtGenerator.generateToken(
