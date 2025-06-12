@@ -6,7 +6,6 @@ import java.util.*
 @Entity(name = "chat_room")
 class ChatRoom (
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     val id: UUID = UUID.randomUUID(),
 
     var lastMessageId: String? = null,
