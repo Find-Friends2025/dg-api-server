@@ -55,6 +55,7 @@ class SecurityConfig(
                 .requestMatchers(HttpMethod.DELETE, "/like/**").authenticated()
 
                 .requestMatchers("/chatroom/**").authenticated()
+                .requestMatchers("/user/**").authenticated()
 
                 // swagger
                 .requestMatchers(

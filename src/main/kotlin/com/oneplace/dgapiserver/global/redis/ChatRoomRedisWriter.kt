@@ -30,6 +30,7 @@ class ChatRoomRedisWriter(
 
         // 유저 ID 목록 Set에 저장
         val userIds = users.map { it.id.toString() }
+        println(userIds.joinToString(","))
         redisTemplate.opsForSet().add(chatRoomUserKey, *userIds.toTypedArray())
         redisTemplate.expire(chatRoomUserKey, ttl)
 
