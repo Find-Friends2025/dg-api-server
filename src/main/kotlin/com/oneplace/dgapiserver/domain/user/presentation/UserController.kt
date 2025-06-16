@@ -23,6 +23,13 @@ class UserController(
             data = userService.searchUser(searchUserRequest)
         )
 
+    @GetMapping("/me")
+    fun getMyProfile(): BaseResponse<UserProfileResponse> =
+        BaseResponse(
+            message = "Get My Profile Success",
+            data = userService.getMyProfile()
+        )
+
     @GetMapping("/{userId}")
     fun getUserProfile(
         @PathVariable userId: Long
@@ -30,13 +37,6 @@ class UserController(
         BaseResponse(
             message = "Get UserProfile Success",
             data = userService.getUserDetail(userId)
-        )
-
-    @GetMapping("/me")
-    fun getMyProfile(): BaseResponse<UserProfileResponse> =
-        BaseResponse(
-            message = "Get My Profile Success",
-            data = userService.getMyProfile()
         )
 
     @PatchMapping("/me")
