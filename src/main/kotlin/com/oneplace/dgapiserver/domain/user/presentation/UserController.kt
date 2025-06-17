@@ -30,7 +30,7 @@ class UserController(
             data = userService.getMyProfile()
         )
 
-    @GetMapping("/{userId}")
+    @GetMapping("/profile/{userId}")
     fun getUserProfile(
         @PathVariable userId: Long
     ): BaseResponse<UserProfileResponse> =
