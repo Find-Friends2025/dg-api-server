@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 import java.text.SimpleDateFormat
 import java.time.Duration
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.util.*
 
 @Service
@@ -43,14 +44,15 @@ class ChatMessageConsumer(
         val senderId = value["senderId"]!!
         val messageId = message.id.toString()
         val messageContent = value["message"] ?: ""
-        val messageDate = value["sendAt"]!!
-        val format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        val messageDateStr = value["sendAt"]!!
+        val parsedDateTime = LocalDateTime.parse(messageDateStr)
+        val date = Date.from(parsedDateTime.atZone(ZoneId.systemDefault()).toInstant())
         chatRoomService.updateChatRoomAndUnreadCount(
             roomId = roomId,
             senderId = senderId,
             messageId = messageId,
             messageContent = messageContent,
-            messageDate = format.parse(messageDate)
+            messageDate = date
         )
     }
 }
