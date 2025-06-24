@@ -54,6 +54,7 @@ class SecurityConfig(
                 .requestMatchers(HttpMethod.GET, "/like/**").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/like/**").authenticated()
 
+                .requestMatchers(HttpMethod.POST, "/image/**").authenticated()
                 .requestMatchers("/chatroom/**").authenticated()
                 .requestMatchers("/user/**").authenticated()
 
