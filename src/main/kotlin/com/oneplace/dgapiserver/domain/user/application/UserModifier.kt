@@ -13,12 +13,18 @@ class UserModifier(
         user: User,
         birth: LocalDate?,
         nickname: String?,
+        introduce: String?,
+        gender: String?,
+        bodyType: String?,
         residence: String?,
         isOnline: Boolean?
     ){
         user.modify(
             birth = birth,
             nickname = nickname,
+            introduce = introduce,
+            gender = gender,
+            bodyType = bodyType,
             residence = residence,
             isOnline = isOnline
         )

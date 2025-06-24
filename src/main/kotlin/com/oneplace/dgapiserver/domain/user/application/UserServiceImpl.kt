@@ -51,8 +51,11 @@ class UserServiceImpl(
             user= user,
             birth = request.birth,
             nickname = request.nickname,
+            introduce = request.introduce,
+            gender = request.gender,
+            bodyType = request.bodyType,
             residence = request.residence,
-            isOnline = request.isOnline,
+            isOnline = request.isOnline
         )
     }
 }

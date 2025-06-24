@@ -30,13 +30,13 @@ class User(
     var nickname: String? = null,
 
     @Column(nullable = true)
-    val bodyType: String? = null,
+    var bodyType: String? = null,
 
     @Column(nullable = true)
     val height: Int? = null,
 
     @Column(nullable = true)
-    val introduce: String? = null,
+    var introduce: String? = null,
 
     var isOnline: Boolean = true,
 
@@ -71,11 +71,17 @@ class User(
     fun modify(
         birth: LocalDate?,
         nickname: String?,
+        introduce: String?,
+        gender: String?,
+        bodyType: String?,
         residence: String?,
         isOnline: Boolean?,
     ) {
         birth?.let { this.birth = it }
         nickname?.let { this.nickname = it }
+        introduce?.let { this.introduce = it }
+        gender?.let { this.gender = it }
+        bodyType?.let { this.bodyType = it }
         residence?.let { this.location = it }
         isOnline?.let { this.isOnline = it }
     }
