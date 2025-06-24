@@ -10,4 +10,5 @@ interface UserLikeRepository : JpaRepository<UserLike, Long> {
     fun countByToUser(toUser: User): Long
     fun findAllByToUser(toUser: User): List<UserLike>
     fun findAllByFromUser(fromUser: User): List<UserLike>
+    fun findAllByFromUser(fromUserId: Long): List<UserLike>
 }

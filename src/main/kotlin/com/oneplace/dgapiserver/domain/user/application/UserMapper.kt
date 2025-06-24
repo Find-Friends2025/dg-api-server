@@ -23,7 +23,7 @@ class UserMapper {
         )
     }
 
-    fun mapToUserList(users: List<User>): List<MatchedUserResponse> {
+    fun mapToUserList(users: List<User>, likesUser: Set<User>): List<MatchedUserResponse> {
         return users.map {
             MatchedUserResponse(
                 id = it.id,
@@ -32,7 +32,7 @@ class UserMapper {
                 age = DateUtil.birthToAge(it.birth),
                 residence = it.location,
                 isOnline = it.isOnline,
-                isLiked = false
+                isLiked = likesUser.contains(it)
             )
         }
     }

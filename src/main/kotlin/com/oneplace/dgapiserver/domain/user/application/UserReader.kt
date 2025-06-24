@@ -1,6 +1,7 @@
 package com.oneplace.dgapiserver.domain.user.application
 
 import com.oneplace.dgapiserver.domain.auth.exception.UserNotFoundException
+import com.oneplace.dgapiserver.domain.like.persistance.repository.UserLikeRepository
 import com.oneplace.dgapiserver.domain.user.persistance.User
 import com.oneplace.dgapiserver.domain.user.persistance.repository.UserRepository
 import com.oneplace.dgapiserver.domain.user.persistance.repository.UserSpecification
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Component
 
 @Component
 class UserReader(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val userLikeRepository: UserLikeRepository
 ) {
 
     fun readByUidOrNull(uid: String): User? =
