@@ -10,4 +10,5 @@ interface UserService {
     fun getUserDetail(userId: Long): UserProfileResponse
     fun getMyProfile(): UserProfileResponse
     fun modifyProfile(request: ModifyUserRequest)
+    fun updateProfileImage(profilePicUrl: String)
 }

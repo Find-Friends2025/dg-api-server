@@ -58,4 +58,10 @@ class UserServiceImpl(
             isOnline = request.isOnline
         )
     }
+
+    override fun updateProfileImage(profilePicUrl: String) {
+        val user = userAuthenticationHolder.current()
+        userModifier.profileImage(user, profilePicUrl)
+    }
+
 }

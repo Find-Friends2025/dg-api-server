@@ -30,4 +30,12 @@ class UserModifier(
         )
         userRepository.save(user)
     }
+
+    fun profileImage(
+        user: User,
+        profilePicUrl: String
+    ) {
+        user.profilePicUrl = profilePicUrl
+    }
+
 }
