@@ -15,7 +15,7 @@ class UserModifier(
         nickname: String?,
         introduce: String?,
         gender: String?,
-        bodyType: String?,
+        profilePicUrl: String?,
         residence: String?,
         isOnline: Boolean?
     ){
@@ -24,7 +24,7 @@ class UserModifier(
             nickname = nickname,
             introduce = introduce,
             gender = gender,
-            bodyType = bodyType,
+            profilePicUrl = profilePicUrl,
             residence = residence,
             isOnline = isOnline
         )

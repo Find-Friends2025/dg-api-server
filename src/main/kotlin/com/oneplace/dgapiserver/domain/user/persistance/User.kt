@@ -73,7 +73,7 @@ class User(
         nickname: String?,
         introduce: String?,
         gender: String?,
-        bodyType: String?,
+        profilePicUrl: String?,
         residence: String?,
         isOnline: Boolean?,
     ) {
@@ -81,7 +81,7 @@ class User(
         nickname?.let { this.nickname = it }
         introduce?.let { this.introduce = it }
         gender?.let { this.gender = it }
-        bodyType?.let { this.bodyType = it }
+        profilePicUrl?.let { this.profilePicUrl = it }
         residence?.let { this.location = it }
         isOnline?.let { this.isOnline = it }
     }

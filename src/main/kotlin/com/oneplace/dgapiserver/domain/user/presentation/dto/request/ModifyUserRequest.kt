@@ -8,7 +8,7 @@ data class ModifyUserRequest(
     val introduce: String?,
     val residence: String?,
     val gender: String?,
-    val bodyType: String?,
+    val profilePicUrl: String?,
     val isOnline: Boolean?,
 ) {
 }

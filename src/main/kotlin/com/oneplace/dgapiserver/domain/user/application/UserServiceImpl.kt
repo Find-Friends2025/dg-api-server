@@ -53,7 +53,7 @@ class UserServiceImpl(
             nickname = request.nickname,
             introduce = request.introduce,
             gender = request.gender,
-            bodyType = request.bodyType,
+            profilePicUrl = request.profilePicUrl,
             residence = request.residence,
             isOnline = request.isOnline
         )
